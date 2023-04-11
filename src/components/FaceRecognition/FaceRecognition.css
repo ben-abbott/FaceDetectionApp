@@ -1,0 +1,8 @@
+div.img-container {
+    overflow: hidden;
+}
+  
+div.img-container img[alt] {
+    margin-left: -16px;
+    text-indent: 16px;
+}
