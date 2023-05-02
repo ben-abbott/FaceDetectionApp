@@ -8,11 +8,14 @@ import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
-// import Clarifai from 'clarifai-nodejs-grpc';
+// import { ClarifaiStub, grpc} from 'clarifai-nodejs-grpc';
 
 // const app = new Clarifai.App({
 //   apiKey: 'c62fa43570144aad9f66ea3fb84e14dc'
 // });
+// const stub = ClarifaiStub.grpc();
+// const metadata = new grpc.Metadata();
+// metadata.set("authorization", "Key YOUR_CLARIFAI_API_KEY");
 
 
 const setupClarifaiRequest = (imageUrl) => {
@@ -81,12 +84,18 @@ class App extends Component {
     this.setState({input: event.target.value});
   }
 
-  onSubmit = () => {
+  onImageSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    fetch("https://api.clarifai.com/v2/models/face-detection/outputs", setupClarifaiRequest(this.state.imageUrl))
+    console.log(this.state.imageUrl);
+    fetch('http://localhost:3000/imageurl', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        imageUrl: this.state.input
+      })
+    })
     .then(response => response.json())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
+    .catch(err => console.log(err))
   }
 
   onRouteChange = (route) => {
@@ -106,6 +115,7 @@ class App extends Component {
 
   render() {
     const { imageUrl, route, isSignedIn, input } = this.state;
+    const { name, entries } = this.state.user;
     return (
       <div className="App">
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
@@ -113,8 +123,8 @@ class App extends Component {
         { route === 'home'
           ? <div>
               <Logo />
-              <Rank />
-              <ImageLinkForm onInputChange={this.onInputChange} onSubmit={this.onSubmit} onClear={this.onClear} input={input}/>
+              <Rank name={name} entries={entries} />
+              <ImageLinkForm onInputChange={this.onInputChange} onImageSubmit={this.onImageSubmit} onClear={this.onClear} input={input}/>
               <FaceRecognition imageUrl={imageUrl}/>
             </div>
           : (
