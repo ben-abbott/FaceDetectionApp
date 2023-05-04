@@ -1,8 +1,17 @@
-div.img-container {
+/* div.img-container {
     overflow: hidden;
 }
   
 div.img-container img[alt] {
     margin-left: -16px;
     text-indent: 16px;
-}
+} */
+
+.bounding-box {
+    position: absolute;
+    box-shadow: 0 0 0 3px #149df2 inset;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    cursor: pointer;
+  }
