@@ -8,46 +8,7 @@ import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
-// import { ClarifaiStub, grpc} from 'clarifai-nodejs-grpc';
 
-// const app = new Clarifai.App({
-//   apiKey: 'c62fa43570144aad9f66ea3fb84e14dc'
-// });
-// const stub = ClarifaiStub.grpc();
-// const metadata = new grpc.Metadata();
-// metadata.set("authorization", "Key YOUR_CLARIFAI_API_KEY");
-
-
-const setupClarifaiRequest = (imageUrl) => {
-  const PAT = '8ddc2f45bf7d45a8aa88796d107fde22';
-  const USER_ID = '3m0w5dyav745';       
-  const APP_ID = 'Face-Detection';
-  const MODEL_ID = 'face-detection';  
-  const IMAGE_URL = imageUrl;
-  const raw = JSON.stringify({
-    "user_app_id": {
-        "user_id": USER_ID,
-        "app_id": APP_ID
-      },
-      "inputs": [
-          {
-              "data": {
-                  "image": {
-                      "url": IMAGE_URL
-                  }
-              }
-          }
-      ]
-  });
-  return {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Key ' + PAT
-    },
-    body: raw
-  };
-}
 
 const initialState = {
   input: '',
